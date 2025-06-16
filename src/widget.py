@@ -2,22 +2,24 @@ from masks import get_mask_card_number
 
 
 def mask_account_card(card_info: str) -> str:
-    """Функция принимает информацию о карте и маскирует ее номер"""
-    card_type_list = []
-    card_info_list = card_info.split()
+    """
+    Маскирует номер карты, сохраняя тип платежной системы
+    """
+    # Разделяю тип и номер карты
+    parts = card_info.split(maxsplit=1)
+    card_type = parts[0]
+    card_number = parts[1].replace(" ", "")  # Удаляю пробелы
 
-    for string in card_info_list:
-        if string.isalpha():
-            card_type_list.append(string)
-    card_type = " ".join(card_type_list)
-
-    card_number = int(card_info_list[-1])
+    # Применяю маскировку
     return f"{card_type} {get_mask_card_number(card_number)}"
 
 
 def get_date(date_str: str) -> str:
-    """Функция реформатирует дату"""
-    date_list = date_str.split("-", 2)
-    date_list[2] = date_list[2][:2]
-    date_list_reverse = ".".join(date_list[::-1])
-    return date_list_reverse
+    """
+    Преобразует дату из формата ГГГГ-MM-ДД в ДД.MM.ГГГГ
+    """
+    # Разделяю дату на части
+    year, month, day = date_str.split("-")
+    # Формирую новый формат
+    return f"{day}.{month}.{year}"
+
