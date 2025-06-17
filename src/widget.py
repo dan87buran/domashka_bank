@@ -1,6 +1,6 @@
 def mask_account_card(card_info: str) -> str:
     """
-    Маскирует номер карты, сохраняя тип платежной системы
+    Маскирует номер карты
     """
     # Разделяю тип и номер карты
     parts = card_info.split(maxsplit=1)

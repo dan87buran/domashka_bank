@@ -8,23 +8,23 @@ def get_mask_card_number(number_card: str) -> str:
     Returns:
         str: Замаскированный номер карты
     """
-    # Удаляем все пробелы
+    # Удаляю все пробелы
     number_card_1 = number_card.replace(" ", "")
 
-    # Разбиваем номер на группы по 4 цифры
+    # Разбиваю номер на группы по 4 цифры
     mask_card_list = " ".join(
         number_card_1[i : i + 4] for i in range(0, len(number_card_1), 4)
     )
 
-    # Преобразуем строку в список
+    # Преобразую строку в список
     card_list = list(mask_card_list)
 
-    # Маскируем цифры с 5-й по 14-ю (считая с 1)
+    # Маскирую цифры с 5-й по 14-ю (считая с 1)
     for i in range(len(card_list)):
         if 4 <= i <= 13 and card_list[i] != " ":
             card_list[i] = "*"
 
-    # Собираем результат обратно в строку
+    # Собираю результат обратно в строку
     masked_number = "".join(card_list)
     return masked_number
 
