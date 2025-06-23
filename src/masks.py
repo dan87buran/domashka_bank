@@ -9,7 +9,8 @@ def get_mask_card_number(number_card: str) -> str:
         str: Замаскированный номер карты
     """
     # Удаляю все пробелы
-    number_card_1 = number_card.replace(" ", "")
+    number_card_1 = number_
+    card.replace(" ", "")
 
     # Разбиваю номер на группы по 4 цифры
     mask_card_list = " ".join(
