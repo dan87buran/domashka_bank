@@ -1,6 +1,7 @@
 from typing import List, Dict
 from datetime import datetime
 
+
 def filter_by_state(operations: List[Dict[str, str]], state: str = 'EXECUTED') -> List[Dict[str, str]]:
     """
     Фильтрует список операций по статусу state
@@ -15,6 +16,7 @@ def filter_by_state(operations: List[Dict[str, str]], state: str = 'EXECUTED') -
         if operation.get('state') == state
     ]
 
+
 def sort_by_date(operations: List[Dict[str, str]], descending: bool = True) -> List[Dict[str, str]]:
     """
     Сортирует список операций по дате
@@ -28,4 +30,3 @@ def sort_by_date(operations: List[Dict[str, str]], descending: bool = True) -> L
         key=lambda x: datetime.fromisoformat(x['date'].replace('T', ' ')),
         reverse=descending
     )
-

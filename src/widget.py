@@ -1,6 +1,5 @@
-
-
 from masks import get_mask_card_number, get_mask_account_number
+
 
 def mask_account_card(info: str) -> str:
     if info.startswith("Счет "):
@@ -28,4 +27,3 @@ def get_date(date_str: str) -> str:
 
     # Формирую новый формат
     return f"{day}.{month}.{year}"
-
