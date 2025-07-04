@@ -1,4 +1,4 @@
-def get_mask_card_number(number_card: str) -> str:
+def get_mask_card_number(number_card: str, card=None) -> str:
     """
     Маскирует номер карты, оставляя видимыми только первые 4 и последние 4 цифры.
 
@@ -41,3 +41,11 @@ def get_mask_account_number(account_number: str) -> str:
         str: Замаскированный номер счета
     """
     return "*" * (len(account_number) - 4) + account_number[-4:]
+
+
+def get_mask():
+    return None
+
+
+def get_mask_account():
+    return None
