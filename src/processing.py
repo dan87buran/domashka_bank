@@ -26,4 +26,4 @@ def sort_by_date(operations: List[Dict[str, str]], descending: bool = True) -> L
     return sorted(
         operations,
         key=lambda x: datetime.fromisoformat(x['date'].replace('T', ' ')),
-        reverse=descending
+        reverse=descending)

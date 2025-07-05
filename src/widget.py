@@ -12,7 +12,7 @@ def mask_info(info: str) -> str:
     return mask_card(info)
 
 
-def mask_card(card_info: str) -> str:
+def mask_card(card_info: str, card_number4=None) -> str:
     """
     Маскирует номер карты, сохраняя тип платежной системы
     """
@@ -25,7 +25,7 @@ def mask_card(card_info: str) -> str:
     return f"{card_type} {card_number:4} {card_number4:6}** **** {card_number - 4:}"
 
 
-def mask_account(account_info: str) -> str:
+def mask_account(account_info: str, parts0=None, parts1=None) -> str:
     """
     Маскирует номер счета
     """

@@ -1,3 +1,9 @@
 [flake8]
 max-line-length = 120
 ignore = E203,W503
+
+
+[mypy]
+check_untyped_defs = True
+disallow_untyped_defs = True
+strict = True
