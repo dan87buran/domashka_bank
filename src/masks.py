@@ -10,23 +10,19 @@ def get_mask_card_number(number_card: str) -> str:
     """
     # Удаляю все пробелы
     number_card_1 = number_card.replace(" ", "")
-
+    if len(number_card_1) != 16:
+        raise ValueError('не ровняется 16')
     # Разбиваю номер на группы по 4 цифры
+    # '40811234112300000000'
+    number_slic_1, nuber_slic_2 = number_card_1[0:6], number_card_1[-4:]
+
+    star = "*" * (len(number_card_1) -10)
+    number_card_1 = f"{number_slic_1}{star}{nuber_slic_2}"
     mask_card_list = " ".join(
         number_card_1[i : i + 4] for i in range(0, len(number_card_1), 4)
     )
 
-    # Преобразую строку в список
-    card_list = list(mask_card_list)
-
-    # Маскирую цифры с 5-й по 14-ю (считая с 1)
-    for i in range(len(card_list)):
-        if 4 <= i <= 13 and card_list[i] != " ":
-            card_list[i] = "*"
-
-    # Собираю результат обратно в строку
-    masked_number = "".join(card_list)
-    return masked_number
+    return mask_card_list
 
 
 def get_mask_account_number(account_number: str) -> str:
@@ -39,4 +35,6 @@ def get_mask_account_number(account_number: str) -> str:
     Returns:
         str: Замаскированный номер счета
     """
-    return "*" * (len(account_number) - 4) + account_number[-4:]
+    if len(account_number) != 20:
+        raise ValueError ('количество символов не равно 20')
+    return "**" + account_number[-4:]
