@@ -1,4 +1,4 @@
-from masks import get_mask_card_number, get_mask_account_number
+from src.masks import get_mask_card_number, get_mask_account_number
 
 
 def mask_account_card(info: str) -> str:
@@ -10,6 +10,8 @@ def mask_account_card(info: str) -> str:
     else:
         # Работаем с картой
         *name_parts, number = info.split()
+        if not number.isdigit():
+            raise ValueError('строка не является числом')
         card_name = ' '.join(name_parts)
         masked = get_mask_card_number(number)
         return f"{card_name} {masked}"
@@ -21,9 +23,11 @@ def get_date(date_str: str) -> str:
     """
     # Разделяю дату и время
     date_part = date_str.split('T')[0]
-
-    # Разделяю дату на части
-    year, month, day = date_part.split("-")
+    try:
+        # Разделяю дату на части
+        year, month, day = date_part.split("-")
+    except Exception as err:
+        raise ValueError(err)
 
     # Формирую новый формат
     return f"{day}.{month}.{year}"
