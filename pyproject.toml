@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.13"
 pytest = "^8.4.1"
+generators = "^2020.4.27"
+parameterized = "^0.9.0"
 
 
 [tool.poetry.group.lint.dependencies]

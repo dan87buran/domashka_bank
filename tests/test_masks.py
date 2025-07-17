@@ -1,6 +1,5 @@
-
-from src.masks import  get_mask_card_number, get_mask_account_number
 import pytest
+from src.masks import get_mask_account_number, get_mask_card_number
 
 
 def test_get_mask_card_number(card_numbers):
@@ -8,7 +7,6 @@ def test_get_mask_card_number(card_numbers):
     assert get_mask_card_number(card_numbers[0]) == "1234 56** **** 3456"
 
     # Проверяем случай с разделителями
-
 
     # Проверяем короткую строку
     with pytest.raises(ValueError):
@@ -23,11 +21,14 @@ def test_get_mask_card_number(card_numbers):
         get_mask_card_number(card_numbers[3])
 
 
-@pytest.mark.parametrize("account", [
-    "40817810000000000000",  # валидный
-    "4081781000000000000",  # короткий
-    "408178100000000000000"  # длинный
-])
+@pytest.mark.parametrize(
+    "account",
+    [
+        "40817810000000000000",  # валидный
+        "4081781000000000000",  # короткий
+        "408178100000000000000",  # длинный
+    ],
+)
 def test_get_mask_account(account):
     if len(account) == 20:
         assert get_mask_account_number(account) == "**0000"

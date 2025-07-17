@@ -1,14 +1,15 @@
+import pytest
 from src.processing import filter_by_state, sort_by_date
 
 
-import pytest
-
-
-@pytest.mark.parametrize("state,expected", [
-    ("EXECUTED", 1),  # Ожидаем 1 элемент
-    ("PENDING", 1),  # Ожидаем 1 элемент
-    ("CANCELLED", 0)  # Нет элементов с таким состоянием
-])
+@pytest.mark.parametrize(
+    "state,expected",
+    [
+        ("EXECUTED", 1),  # Ожидаем 1 элемент
+        ("PENDING", 1),  # Ожидаем 1 элемент
+        ("CANCELLED", 0),  # Нет элементов с таким состоянием
+    ],
+)
 def test_filter_by_state(transactions, state, expected):
     result = filter_by_state(transactions, state)
     assert len(result) == expected
