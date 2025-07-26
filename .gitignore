@@ -200,3 +200,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 .idea/
+.env
+__pycache__/
+*.pyc
