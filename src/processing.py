@@ -2,31 +2,42 @@ from typing import List, Dict
 from datetime import datetime
 
 
-def filter_by_state(operations: List[Dict[str, str]], state: str = 'EXECUTED') -> List[Dict[str, str]]:
+def filter_by_state(transactions: List[Dict], state: str) -> List[Dict]:
     """
-    Фильтрует список операций по статусу state
+    Фильтрует транзакции по указанному состоянию.
 
-    :param operations: список словарей с операциями
-    :param state: значение состояния для фильтрации (по умолчанию 'EXECUTED')
-    :return: отфильтрованный список операций
+    Args:
+        transactions: Список словарей с транзакциями
+        state: Состояние для фильтрации
+
+    Returns:
+        Отфильтрованный список транзакций
     """
-    return [
-        operation
-        for operation in operations
-        if operation.get('state') == state
-    ]
+    return [t for t in transactions if t.get('state') == state]
 
 
-def sort_by_date(operations: List[Dict[str, str]], descending: bool = True) -> List[Dict[str, str]]:
+def sort_by_date(transactions: List[Dict], descending: bool = True) -> List[Dict]:
     """
-    Сортирует список операций по дате
+    Сортирует транзакции по дате.
 
-    :param operations: список словарей с операциями
-    :param descending: порядок сортировки (True - убывание, False - возрастание)
-    :return: отсортированный список операций
+    Args:
+        transactions: Список словарей с транзакциями
+        descending: Флаг сортировки по убыванию (по умолчанию True)
+
+    Returns:
+        Отсортированный список транзакций
     """
-    return sorted(
-        operations,
-        key=lambda x: datetime.fromisoformat(x['date'].replace('T', ' ')),
-        reverse=descending
-    )
+    def get_date(transaction):
+        try:
+            return datetime.fromisoformat(transaction['date'])
+        except (ValueError, KeyError):
+            raise ValueError("Некорректный формат даты")
+
+    try:
+        return sorted(
+            transactions,
+            key=get_date,
+            reverse=descending
+        )
+    except ValueError as e:
+        raise ValueError(f"Ошибка при сортировке: {e}")

@@ -5,42 +5,41 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+API_KEY = os.getenv('EXCHANGE_RATE_API_KEY')
+BASE_URL = "https://api.apilayer.com/exchangerates_data/latest"
 
-class Optionalfloat:
-    pass
 
+def convert_to_rub(transaction: Dict[str, str]) -> Optional[float]:
+    """
+    Конвертирует сумму транзакции в рубли.
 
-class CurrencyConverter:
-    API_URL = "https://api.apilayer.com/exchangerates_data/latest"
+    Args:
+        transaction: Словарь с данными о транзакции
 
-    @staticmethod
-    def convert_to_rub(transaction: Dict) -> Optionalfloat:
-        """Конвертирует сумму транзакции в рубли."""
-        if not transaction or 'amount' not in transaction or 'currency' not in transaction:
-            return None
+    Returns:
+        Сумма в рублях (float) или None при ошибках
+    """
+    if not transaction.get('amount'):
+        return None
 
-        try:
-            amount = float(transaction['amount'])
-            currency = transaction['currency']
+    amount = float(transaction['amount'])
+    currency = transaction.get('currency', 'RUB').upper()
 
-            if currency == 'RUB':
-                return amount
+    if currency == 'RUB':
+        return amount
 
-            api_key = os.getenv('EXCHANGE_RATE_API_KEY')
-            if not api_key:
-                raise ValueError("API key not configured")
+    if currency not in ('USD', 'EUR'):
+        return None
 
-            response = requests.get(
-                CurrencyConverter.API_URL,
-                params={'base': currency, 'symbols': 'RUB'},
-                headers={'apikey': api_key},
-                timeout=10
-            )
-            response.raise_for_status()
-
-            rate = response.json()['rates']['RUB']
-            return round(amount * rate, 2)
-
-        except (ValueError, TypeError, requests.RequestException, KeyError) as e:
-            print(f"Conversion error: {e}")
-            return None
+    try:
+        response = requests.get(
+            BASE_URL,
+            params={'base': currency, 'symbols': 'RUB'},
+            headers={'apikey': API_KEY},
+            timeout=10
+        )
+        response.raise_for_status()
+        rate = response.json()['rates']['RUB']
+        return round(amount * rate, 2)
+    except (requests.RequestException, KeyError):
+        return None
